@@ -1,0 +1,26 @@
+name: Validar FinanTrack iOS
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  bundle-ios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Comprobar configuración Expo
+        run: npx expo config --type public
+      - name: Generar bundle iOS
+        run: npx expo export --platform ios --output-dir dist-test
