@@ -1,55 +1,62 @@
-# Welcome to your Expo app 👋
+# FinanTrack — finanzas personales (demo)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Primera versión móvil diseñada para iPhone, con **React Native, Expo SDK 58, Expo Router y JavaScript**.
 
-## Get started
+## Funcionalidades
 
-1. Install dependencies
+- **Inicio:** saldo disponible, ingresos, gastos y resumen mensual.
+- **Movimientos:** historial con filtro por tipo y formulario para agregar ingresos/gastos.
+- **Estadísticas:** evolución semanal y categorías de gasto.
+- **Presupuestos:** límites de demostración y barras de progreso.
+- Datos ficticios, en **pesos mexicanos (MXN)** y en español. Se reinician al cerrar o recargar la app.
 
-   ```bash
-   npm install
-   ```
+No hay autenticación, backend, base de datos ni conexión a cuentas bancarias.
 
-2. Start the app
+## Requisitos
 
-   ```bash
-   npx expo start
-   ```
+- Node.js compatible con Expo SDK 58 (Node 22.13+, 24.3+ o 26+).
+- Windows o macOS y un editor (por ejemplo Antigravity).
+- Un iPhone para probar la interfaz y una instalación de Expo Go **compatible con SDK 58**.
 
-In the output, you'll find options to open the app in a
+> **Nota para iPhone físico:** durante la transición de SDK 58 (octubre-noviembre de 2026), Expo Go de la App Store puede ser una versión anterior. Si aparece un error de incompatibilidad de SDK, el proyecto no se puede abrir en esa instalación de Expo Go. No cambies manualmente la versión de una dependencia. Consulta https://docs.expo.dev/troubleshooting/expo-go-version-mismatch/ . Una alternativa es una development build con EAS o instalar un Expo Go compatible a través de TestFlight/\`eas go\` con los requisitos de Apple, hasta que la versión de la App Store sea compatible.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Iniciar
 
-You can start developing by editing the files inside the **src/app** directory. This project uses JavaScript/JSX and [file-based routing](https://docs.expo.dev/router/introduction). The home screen is `src/app/index.jsx`.
+\`\`\`bash
+npm ci
+npx expo start
+\`\`\`
 
-## Get a fresh project
+Con el iPhone y la computadora conectados a la misma Wi-Fi, escanea el QR usando la cámara del teléfono y abre el proyecto en **Expo Go compatible**. Si hay problemas de conexión, prueba:
 
-When you're ready, run:
+\`\`\`bash
+npx expo start --tunnel
+\`\`\`
 
-```bash
-npm run reset-project
-```
+## Comprobaciones
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+\`\`\`bash
+npx expo-doctor@latest
+npx expo export --platform ios --output-dir dist-test
+\`\`\`
 
-### Other setup steps
+## Estructura
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
+\`\`\`text
+src/
+  app/                  # 4 pantallas de Expo Router (.jsx)
+  components/finantrack/ # componentes y formulario
+  constants/            # colores y categorías
+  context/              # estado temporal de movimientos
+  data/                 # datos de demostración
+  utils/                # formato MXN y cálculos
+\`\`\`
 
-## Learn more
+Los activos y componentes de ejemplo anteriores se conservan sin usarse para facilitar una transición gradual. La ruta de ejemplo \`src/app/explore.jsx\` se elimina de las rutas activas porque ya no pertenece a la navegación de FinanTrack.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Notas
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- El \`app.json\` está configurado para iOS y iPhone.
+- Los íconos de la app y de lanzamiento siguen siendo temporales (assets de Expo); se personalizarán más adelante.
+- Los presupuestos son valores demo; todavía no se pueden editar.
+- Para publicar una app independiente en App Store se necesitará una compilación y firma iOS.
