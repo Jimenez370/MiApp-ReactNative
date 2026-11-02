@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { palette, categories } from '@/constants/finantrack';
+import { FinanceIcon } from '@/components/finantrack/finance-icon';
 import { useFinances } from '@/context/finances-context';
 import { amountByCategory, clampPercent, formatMXN, monthTitle, weeklyExpenseTotals } from '@/utils/finance';
 import { Header, ProgressRow, Screen, SectionHeading } from '@/components/finantrack/ui';
@@ -23,7 +24,13 @@ export default function StatisticsScreen() {
       <View style={styles.hero}>
         <Text style={styles.heroEyebrow}>BALANCE DEL MES</Text>
         <Text style={styles.heroValue} numberOfLines={1} adjustsFontSizeToFit>{formatMXN(savings)}</Text>
-        <View style={styles.heroLine}><Text style={styles.heroBadge}>{savings >= 0 ? '↗' : '↘'} {savingsRate}%</Text><Text style={styles.heroCaption}>de tus ingresos sin gastar</Text></View>
+        <View style={styles.heroLine}>
+          <View style={styles.heroBadge}>
+            <FinanceIcon name={savings >= 0 ? 'arrow.up.right' : 'arrow.down.right'} size={13} weight="semibold" color="#B9EED5" />
+            <Text style={styles.heroBadgeText}>{savingsRate}%</Text>
+          </View>
+          <Text style={styles.heroCaption}>de tus ingresos sin gastar</Text>
+        </View>
       </View>
       <View style={styles.metrics}>
         <View style={styles.metric}><Text style={styles.metricLabel}>Ingresos</Text><Text style={styles.metricValue}>{formatMXN(monthlyIncome)}</Text><View style={[styles.metricRule, { backgroundColor: palette.teal }]} /></View>
@@ -54,7 +61,7 @@ export default function StatisticsScreen() {
             <ProgressRow
               key={item.id}
               title={categories[item.id].name}
-              emoji={categories[item.id].emoji}
+              icon={categories[item.id].icon}
               spent={item.amount}
               limit={monthlyExpenses || 1}
               color={item.color}
@@ -71,7 +78,8 @@ const styles = StyleSheet.create({
   heroEyebrow: { color: '#ACC5CC', fontSize: 10, fontWeight: '800', letterSpacing: 1.4 },
   heroValue: { fontSize: 34, color: '#FFFFFF', fontWeight: '900', marginTop: 11, letterSpacing: -1 },
   heroLine: { flexDirection: 'row', alignItems: 'center', marginTop: 16, gap: 10 },
-  heroBadge: { backgroundColor: '#235A55', color: '#B9EED5', overflow: 'hidden', borderRadius: 9, paddingHorizontal: 10, paddingVertical: 5, fontWeight: '800', fontSize: 12 },
+  heroBadge: { flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#235A55', borderRadius: 9, paddingHorizontal: 10, paddingVertical: 5 },
+  heroBadgeText: { color: '#B9EED5', fontWeight: '800', fontSize: 12 },
   heroCaption: { color: '#AFC7CE', fontSize: 11, flex: 1 },
   metrics: { flexDirection: 'row', gap: 12 },
   metric: { backgroundColor: '#FFFFFF', borderColor: palette.border, borderWidth: 1, borderRadius: 20, flex: 1, minWidth: 0, padding: 17 },

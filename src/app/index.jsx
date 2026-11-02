@@ -17,7 +17,7 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Header eyebrow="TU DINERO, MÁS CLARO" title="Hola, bienvenido 👋" subtitle="Toma el control de tus finanzas." />
+      <Header eyebrow="TU DINERO, MÁS CLARO" title="Hola, bienvenido" subtitle="Toma el control de tus finanzas." />
       <BalanceCard balance={balance} month={monthTitle()} />
 
       <View style={styles.metrics}>
@@ -28,8 +28,8 @@ export default function HomeScreen() {
       <View style={styles.section}>
         <SectionHeading title="Accesos rápidos" />
         <View style={styles.quickRow}>
-          <QuickAction label="Nuevo ingreso" symbol="+" onPress={() => setEntryType('income')} />
-          <QuickAction label="Nuevo gasto" symbol="−" variant="expense" onPress={() => setEntryType('expense')} />
+          <QuickAction label="Nuevo ingreso" onPress={() => setEntryType('income')} />
+          <QuickAction label="Nuevo gasto" variant="expense" onPress={() => setEntryType('expense')} />
         </View>
       </View>
 
