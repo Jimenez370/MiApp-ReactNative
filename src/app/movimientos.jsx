@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { palette } from '@/constants/finantrack';
+import { FinanceIcon } from '@/components/finantrack/finance-icon';
 import { useFinances } from '@/context/finances-context';
 import { formatMXN, monthTitle } from '@/utils/finance';
 import { EmptyState, Header, Screen, SectionHeading, TransactionRow } from '@/components/finantrack/ui';
@@ -38,7 +39,7 @@ export default function MovementsScreen() {
           ))}
         </View>
         <Pressable style={styles.add} onPress={() => setEntryType('expense')} accessibilityRole="button" accessibilityLabel="Agregar movimiento">
-          <Text style={styles.addText}>＋</Text>
+          <FinanceIcon name="plus" size={22} weight="semibold" color="#FFFFFF" />
         </Pressable>
       </View>
       <SectionHeading title="Historial" />
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
   filterText: { color: palette.inkMuted, fontWeight: '700', fontSize: 11 },
   activeText: { color: palette.ink },
   add: { backgroundColor: palette.teal, borderRadius: 14, width: 44, alignItems: 'center', justifyContent: 'center' },
-  addText: { fontWeight: '500', fontSize: 25, color: '#FFFFFF', marginTop: -2 },
   list: { borderWidth: 1, borderColor: palette.border, borderRadius: 22, backgroundColor: '#FFFFFF', paddingHorizontal: 15 },
   note: { marginTop: 16, color: palette.inkMuted, fontSize: 10, textAlign: 'center' },
 });

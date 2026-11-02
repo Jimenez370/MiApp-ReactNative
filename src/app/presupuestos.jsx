@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { palette, categories } from '@/constants/finantrack';
+import { FinanceIcon } from '@/components/finantrack/finance-icon';
 import { useFinances } from '@/context/finances-context';
 import { amountByCategory, clampPercent, formatMXN, monthTitle } from '@/utils/finance';
 import { Header, ProgressRow, Screen, SectionHeading } from '@/components/finantrack/ui';
@@ -32,7 +33,7 @@ export default function BudgetsScreen() {
             <ProgressRow
               key={item.id}
               title={categories[item.id].name}
-              emoji={categories[item.id].emoji}
+              icon={categories[item.id].icon}
               spent={amountByCategory(monthly, item.id)}
               limit={item.limit}
               color={item.color}
@@ -41,7 +42,7 @@ export default function BudgetsScreen() {
         </View>
       </View>
       <View style={styles.tip}>
-        <Text style={styles.tipEmoji}>💡</Text>
+        <View style={styles.tipIcon}><FinanceIcon name="lightbulb.fill" color={palette.teal} size={22} /></View>
         <View style={styles.tipCopy}>
           <Text style={styles.tipTitle}>Un buen hábito financiero</Text>
           <Text style={styles.tipBody}>Revisa tus límites cada semana para encontrar gastos que puedas reducir.</Text>
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   section: { marginTop: 28 },
   categoryCard: { backgroundColor: palette.surface, padding: 20, paddingBottom: 3, borderRadius: 22, borderColor: palette.border, borderWidth: 1 },
   tip: { flexDirection: 'row', marginTop: 22, borderRadius: 19, backgroundColor: '#E5F3EE', padding: 17, gap: 11 },
-  tipEmoji: { fontSize: 23 },
+  tipIcon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
   tipCopy: { flex: 1 },
   tipTitle: { fontSize: 13, fontWeight: '800', color: palette.teal },
   tipBody: { color: '#4D7A6E', fontSize: 11, lineHeight: 17, marginTop: 4 },

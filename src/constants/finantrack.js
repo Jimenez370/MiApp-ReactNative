@@ -16,15 +16,15 @@ export const palette = {
 };
 
 export const categories = {
-  nomina: { name: 'Nómina', emoji: '💼', color: '#E8F3FC' },
-  extra: { name: 'Ingresos extra', emoji: '✨', color: '#E2F5EB' },
-  alimentacion: { name: 'Alimentación', emoji: '🛒', color: '#FFF0DA' },
-  transporte: { name: 'Transporte', emoji: '🚗', color: '#E7EEFA' },
-  vivienda: { name: 'Vivienda', emoji: '🏠', color: '#E8F2F9' },
-  entretenimiento: { name: 'Entretenimiento', emoji: '🎬', color: '#F1E9FA' },
-  servicios: { name: 'Servicios', emoji: '💡', color: '#E4F5F5' },
-  salud: { name: 'Salud', emoji: '💊', color: '#FBE9EC' },
-  otros: { name: 'Otros', emoji: '📦', color: '#EFF0F2' },
+  nomina: { name: 'Nómina', icon: 'briefcase.fill', color: '#E8F3FC' },
+  extra: { name: 'Ingresos extra', icon: 'sparkles', color: '#E2F5EB' },
+  alimentacion: { name: 'Alimentación', icon: 'cart.fill', color: '#FFF0DA' },
+  transporte: { name: 'Transporte', icon: 'car.fill', color: '#E7EEFA' },
+  vivienda: { name: 'Vivienda', icon: 'house.fill', color: '#E8F2F9' },
+  entretenimiento: { name: 'Entretenimiento', icon: 'play.rectangle.fill', color: '#F1E9FA' },
+  servicios: { name: 'Servicios', icon: 'bolt.fill', color: '#E4F5F5' },
+  salud: { name: 'Salud', icon: 'cross.case.fill', color: '#FBE9EC' },
+  otros: { name: 'Otros', icon: 'shippingbox.fill', color: '#EFF0F2' },
 };
 
 export const incomeCategoryIds = ['nomina', 'extra', 'otros'];

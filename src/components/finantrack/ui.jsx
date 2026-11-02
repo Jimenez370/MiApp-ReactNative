@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FinanceIcon } from '@/components/finantrack/finance-icon';
 import { palette, categories } from '@/constants/finantrack';
 import { clampPercent, formatMXN, shortDate } from '@/utils/finance';
 
@@ -36,7 +37,10 @@ export function SectionHeading({ title, action, onPress }) {
     <View style={styles.sectionRow}>
       <Text style={styles.sectionTitle}>{title}</Text>
       {action ? <Pressable onPress={onPress} accessibilityRole="button" hitSlop={8}>
-        <Text style={styles.sectionAction}>{action} ›</Text>
+        <View style={styles.sectionActionWrap}>
+          <Text style={styles.sectionAction}>{action}</Text>
+          <FinanceIcon name="chevron.right" size={12} color={palette.teal} />
+        </View>
       </Pressable> : null}
     </View>
   );
@@ -48,7 +52,7 @@ export function BalanceCard({ balance, month }) {
       <View style={styles.orbOne} /><View style={styles.orbTwo} />
       <View style={styles.balanceHeader}>
         <Text style={styles.balanceLabel}>SALDO DISPONIBLE</Text>
-        <Text style={styles.balanceMonogram}>◈</Text>
+        <FinanceIcon name="creditcard.fill" size={24} color="#94D1BC" />
       </View>
       <Text style={styles.balanceAmount} numberOfLines={1} adjustsFontSizeToFit>{formatMXN(balance)}</Text>
       <View style={styles.balanceFoot}>
@@ -65,9 +69,12 @@ export function MetricCard({ label, value, variant = 'income' }) {
   return (
     <View style={styles.metricCard}>
       <View style={[styles.metricIcon, { backgroundColor: isIncome ? palette.tealSoft : palette.redSoft }]}>
-        <Text style={{ fontSize: 18, color: isIncome ? palette.teal : palette.red }}>
-          {isIncome ? '↙' : '↗'}
-        </Text>
+        <FinanceIcon
+          name={isIncome ? 'arrow.down.left' : 'arrow.up.right'}
+          size={19}
+          weight="semibold"
+          color={isIncome ? palette.teal : palette.red}
+        />
       </View>
       <Text style={styles.metricLabel}>{label}</Text>
       <Text style={styles.metricValue} numberOfLines={1} adjustsFontSizeToFit>{formatMXN(value)}</Text>
@@ -76,7 +83,7 @@ export function MetricCard({ label, value, variant = 'income' }) {
   );
 }
 
-export function QuickAction({ label, symbol, variant, onPress }) {
+export function QuickAction({ label, variant, onPress }) {
   const expense = variant === 'expense';
   return (
     <Pressable
@@ -85,10 +92,10 @@ export function QuickAction({ label, symbol, variant, onPress }) {
       onPress={onPress}
       style={({ pressed }) => [styles.quickAction, expense && styles.quickExpense, pressed && { opacity: 0.75 }]}>
       <View style={[styles.quickSymbol, expense && styles.quickSymbolExpense]}>
-        <Text style={{ fontSize: 21, color: expense ? palette.teal : '#FFFFFF' }}>{symbol}</Text>
+        <FinanceIcon name={expense ? 'minus' : 'plus'} size={20} weight="semibold" color={expense ? palette.teal : '#FFFFFF'} />
       </View>
       <Text style={[styles.quickText, expense && { color: palette.ink }]}>{label}</Text>
-      <Text style={[styles.quickArrow, expense && { color: palette.teal }]}>›</Text>
+      <FinanceIcon name="chevron.right" size={15} weight="semibold" color={expense ? palette.teal : '#FFFFFF'} />
     </Pressable>
   );
 }
@@ -99,7 +106,7 @@ export function TransactionRow({ item, showBorder = true }) {
   return (
     <View style={[styles.transactionRow, !showBorder && { borderBottomWidth: 0 }]}>
       <View style={[styles.transactionIcon, { backgroundColor: category.color }]}>
-        <Text style={styles.emoji}>{category.emoji}</Text>
+        <FinanceIcon name={category.icon} size={22} weight="semibold" color={positive ? palette.teal : palette.ink} />
       </View>
       <View style={styles.transactionCopy}>
         <Text style={styles.transactionTitle} numberOfLines={1}>{item.title}</Text>
@@ -115,14 +122,14 @@ export function TransactionRow({ item, showBorder = true }) {
   );
 }
 
-export function ProgressRow({ title, emoji, spent, limit, color }) {
+export function ProgressRow({ title, icon, spent, limit, color }) {
   const percentage = limit > 0 ? spent / limit * 100 : 0;
   const over = spent > limit;
   return (
     <View style={styles.progressRow}>
       <View style={styles.progressTop}>
         <View style={styles.progressTitleWrap}>
-          <Text style={styles.progressEmoji}>{emoji}</Text>
+          <FinanceIcon name={icon} size={17} weight="semibold" color={palette.ink} />
           <Text style={styles.progressTitle}>{title}</Text>
         </View>
         <Text style={[styles.progressAmount, over && { color: palette.red }]}>
@@ -156,12 +163,12 @@ const styles = StyleSheet.create({
   sectionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 15 },
   sectionTitle: { fontSize: 19, fontWeight: '800', color: palette.ink, letterSpacing: -0.35 },
   sectionAction: { fontSize: 13, fontWeight: '700', color: palette.teal },
+  sectionActionWrap: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   balanceCard: { backgroundColor: palette.navy, padding: 24, borderRadius: 26, overflow: 'hidden', marginBottom: 17, minHeight: 206 },
   orbOne: { width: 195, height: 195, borderRadius: 100, backgroundColor: '#184B58', position: 'absolute', top: -100, right: -45 },
   orbTwo: { width: 176, height: 176, borderRadius: 100, borderWidth: 1, borderColor: '#39717C', position: 'absolute', top: -72, right: 0 },
   balanceHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   balanceLabel: { color: '#A8C4CB', fontSize: 11, letterSpacing: 1.5, fontWeight: '800' },
-  balanceMonogram: { color: '#94D1BC', fontSize: 24 },
   balanceAmount: { color: '#FFFFFF', fontSize: 37, fontWeight: '800', marginTop: 17, letterSpacing: -1 },
   balanceFoot: { flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 25 },
   positiveDot: { width: 7, height: 7, borderRadius: 10, backgroundColor: '#68D9AD' },
@@ -177,10 +184,8 @@ const styles = StyleSheet.create({
   quickSymbol: { width: 32, height: 32, borderRadius: 11, backgroundColor: '#319480', alignItems: 'center', justifyContent: 'center' },
   quickSymbolExpense: { backgroundColor: '#C6E9DC' },
   quickText: { flex: 1, color: '#FFFFFF', fontSize: 12, fontWeight: '800' },
-  quickArrow: { fontSize: 21, fontWeight: '500', color: '#FFFFFF' },
   transactionRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, borderBottomWidth: 1, borderColor: palette.border, gap: 11 },
   transactionIcon: { width: 46, height: 46, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
-  emoji: { fontSize: 22 },
   transactionCopy: { flex: 1, minWidth: 0, gap: 4 },
   transactionTitle: { fontWeight: '700', color: palette.ink, fontSize: 13 },
   transactionSub: { color: palette.inkMuted, fontSize: 11 },
@@ -188,7 +193,6 @@ const styles = StyleSheet.create({
   progressRow: { marginBottom: 20 },
   progressTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, gap: 8 },
   progressTitleWrap: { flexDirection: 'row', gap: 8, alignItems: 'center', flexShrink: 1 },
-  progressEmoji: { fontSize: 18 },
   progressTitle: { fontSize: 13, fontWeight: '700', color: palette.ink },
   progressAmount: { fontSize: 12, fontWeight: '800', color: palette.ink, flexShrink: 1, textAlign: 'right' },
   progressLimit: { color: palette.inkMuted, fontWeight: '500' },

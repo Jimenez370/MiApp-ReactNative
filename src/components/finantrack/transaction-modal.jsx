@@ -4,6 +4,7 @@ import {
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FinanceIcon } from '@/components/finantrack/finance-icon';
 import { useFinances } from '@/context/finances-context';
 import { categories, expenseCategoryIds, incomeCategoryIds, palette } from '@/constants/finantrack';
 
@@ -49,7 +50,7 @@ export default function TransactionModal() {
               <Text style={styles.heading}>{income ? 'Registrar ingreso' : 'Registrar gasto'}</Text>
             </View>
             <Pressable onPress={close} style={styles.closeButton} accessibilityRole="button">
-              <Text style={styles.closeText}>✕</Text>
+              <FinanceIcon name="xmark" color={palette.inkMuted} size={15} weight="semibold" />
             </Pressable>
           </View>
           <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
@@ -84,8 +85,9 @@ export default function TransactionModal() {
                   accessibilityRole="button"
                   accessibilityState={{ selected: category === id }}
                   style={[styles.chip, category === id && styles.chipSelected]}>
+                  <FinanceIcon name={categories[id].icon} size={15} color={category === id ? palette.teal : palette.inkMuted} />
                   <Text style={[styles.chipText, category === id && styles.chipTextSelected]}>
-                    {categories[id].emoji} {categories[id].name}
+                    {categories[id].name}
                   </Text>
                 </Pressable>
               ))}
@@ -111,11 +113,10 @@ const styles = StyleSheet.create({
   eyebrow: { color: palette.teal, fontSize: 10, letterSpacing: 1.5, fontWeight: '800' },
   heading: { color: palette.ink, fontSize: 23, fontWeight: '800', marginTop: 5 },
   closeButton: { backgroundColor: palette.background, borderRadius: 20, width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
-  closeText: { fontSize: 14, color: palette.inkMuted },
   label: { fontSize: 12, fontWeight: '700', color: palette.ink, marginBottom: 9 },
   input: { backgroundColor: '#F7F9FA', borderColor: palette.border, borderWidth: 1, borderRadius: 14, paddingHorizontal: 15, height: 51, fontSize: 15, color: palette.ink, marginBottom: 20 },
   options: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 17 },
-  chip: { borderWidth: 1, borderColor: palette.border, borderRadius: 13, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: palette.surface },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 7, borderWidth: 1, borderColor: palette.border, borderRadius: 13, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: palette.surface },
   chipSelected: { backgroundColor: palette.tealSoft, borderColor: '#B7DCCF' },
   chipText: { fontSize: 12, color: palette.inkMuted, fontWeight: '600' },
   chipTextSelected: { color: palette.teal, fontWeight: '800' },

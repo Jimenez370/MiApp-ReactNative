@@ -60,3 +60,7 @@ Los activos y componentes de ejemplo anteriores se conservan sin usarse para fac
 - Los íconos de la app y de lanzamiento siguen siendo temporales (assets de Expo); se personalizarán más adelante.
 - Los presupuestos son valores demo; todavía no se pueden editar.
 - Para publicar una app independiente en App Store se necesitará una compilación y firma iOS.
+
+## Iconos
+
+Los iconos de la interfaz utilizan `expo-symbols` (SF Symbols nativos de iOS), ya incluido en Expo SDK 58. Se usa un componente reutilizable `src/components/finantrack/finance-icon.jsx` y se definen nombres de iconos por categoría en `src/constants/finantrack.js`. No se necesitan dependencias nuevas.
